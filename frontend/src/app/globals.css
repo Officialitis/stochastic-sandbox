@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary:   #f8fafc;
+  --bg-surface:   #ffffff;
+  --bg-elevated:  #f1f5f9;
+  --border:       #e2e8f0;
+  --border-strong:#cbd5e1;
+  --accent:       #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #eef2ff;
+  --text-primary: #0f172a;
+  --text-secondary:#334155;
+  --text-muted:   #64748b;
+  --text-faint:   #94a3b8;
+  --success:      #059669;
+  --success-light:#ecfdf5;
+  --danger:       #dc2626;
+  --danger-light: #fef2f2;
+  --shadow-sm:    0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:    0 4px 12px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════
+   SIDEBAR — Desktop: fixed column
+                Mobile: slide-in drawer
+══════════════════════════════════════ */
+
+/* Desktop default: static sidebar, 288px wide */
+.app-sidebar {
+  width: 288px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 30;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Close row: hidden on desktop */
+.sidebar-close-row {
+  display: none !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Hamburger button: hidden on desktop, shown on mobile */
+.mobile-only-flex {
+  display: none;
+}
+
+/* Desktop subtitle / non-essential labels */
+.desktop-only {
+  display: inline;
+}
+
+/* ══════════════════════════════════════
+   MOBILE  ≤ 768px
+══════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Show hamburger */
+  .mobile-only-flex {
+    display: flex !important;
+  }
+
+  /* Hide desktop-only text */
+  .desktop-only {
+    display: none !important;
+  }
+
+  /* Sidebar becomes full-height slide-in drawer */
+  .app-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: min(288px, 88vw) !important;
+    transform: translateX(-110%) !important;
+    z-index: 50 !important;
+    box-shadow: var(--shadow-md) !important;
+  }
+
+  /* When open, slide into view */
+  .app-sidebar.sidebar-open {
+    transform: translateX(0) !important;
+  }
+
+  /* Show close row inside drawer */
+  .sidebar-close-row {
+    display: flex !important;
+  }
+}
+
+/* ══════════════════════════════════════
+   Scrollbar
+══════════════════════════════════════ */
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 99px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+/* ── Panel card ── */
+.panel-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Range slider ── */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 99px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+  transition: box-shadow 0.15s;
+}
+input[type='range']::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 5px rgba(79,70,229,0.2);
+}
+
+/* ── Animations ── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.animate-spin { animation: spin 0.8s linear infinite; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn { animation: fadeIn 0.3s ease forwards; }
+
+/* ── Plotly light overrides ── */
+.js-plotly-plot .plotly .modebar {
+  background: rgba(248,250,252,0.95) !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+.js-plotly-plot .plotly .modebar-btn path { fill: #64748b !important; }
+.js-plotly-plot .plotly .modebar-btn:hover path { fill: #4f46e5 !important; }
+.js-plotly-plot .plotly .modebar-btn.active path { fill: #4f46e5 !important; }
