@@ -7,7 +7,7 @@ import { HistogramChart } from "@/components/HistogramChart";
 import { StatsPanel } from "@/components/StatsPanel";
 import { TreeViewer } from "@/components/TreeViewer";
 import { PdfExportButton } from "@/components/PdfExportButton";
-import { runSimulation, runTree } from "@/lib/api";
+import { runSimulation, runTree, API_BASE } from "@/lib/api";
 import type { SimRequest, SimResponse, TreeRequest, TreeResponse, ModelType } from "@/lib/api";
 
 const MC_TABS = [
@@ -81,7 +81,7 @@ export default function Home() {
   useEffect(() => {
     const check = async () => {
       try {
-        const r = await fetch("http://localhost:8000/api/health");
+        const r = await fetch(`${API_BASE}/api/health`);
         setApiStatus(r.ok ? "ok" : "error");
       } catch { setApiStatus("error"); }
     };
