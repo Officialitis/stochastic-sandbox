@@ -84,13 +84,10 @@ class PdfRequest(BaseModel):
 # ---------------------------------------------------------------------------
 
 @app.get("/")
-def root():
-    return {"status": "ok", "service": "Stochastic Sandbox API", "version": "1.0.0"}
-
-
+@app.get("/healthz")
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "version": "1.0.0"}
+    return {"status": "ok", "service": "Stochastic Sandbox API", "version": "1.0.0"}
 
 
 @app.post("/api/simulate")
